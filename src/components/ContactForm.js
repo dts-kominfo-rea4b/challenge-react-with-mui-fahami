@@ -3,13 +3,97 @@
 // dan Card
 // https://mui.com/material-ui/react-card/#basic-card
 
-const ContactForm = () => {
-    // Form berisi name, phone, email, dan photo url
-    // Buatlah state newContact berupa objek sesuai dengan data yang ada
+import {
+	Button,
+	Card,
+	CardActions,
+	CardContent,
+	TextField,
+} from "@mui/material";
+import { useState } from "react";
 
-    return (
-        <> </>
-    );
-}
+const ContactForm = ({ handleSave }) => {
+	// Form berisi name, phone, email, dan photo url
+	// Buatlah state newContact berupa objek sesuai dengan data yang ada
+	const defaultContact = {
+		name: "",
+		phone: "",
+		email: "",
+		photo: "",
+	};
+
+	const [contact, setContact] = useState(defaultContact);
+
+	const handleChange = (e) => {
+		setContact((prevstate) => ({
+			...prevstate,
+			[e.target.name]: e.target.value,
+		}));
+	};
+	return (
+		<Card
+			sx={{
+				".MuiTextField-root": { mb: 2 },
+				p: 1,
+			}}
+			component="form"
+			onSubmit={(e) => {
+				e.preventDefault();
+				handleSave(contact);
+				setContact(defaultContact);
+			}}
+		>
+			<CardContent>
+				<TextField
+					id="filled-basic"
+					label="Name"
+					variant="filled"
+					autoComplete="name"
+					required
+					name="name"
+					value={contact.name}
+					fullWidth
+					onChange={handleChange}
+				/>
+				<TextField
+					id="filled-basic"
+					label="Phone"
+					variant="filled"
+					required
+					name="phone"
+					fullWidth
+					value={contact.phone}
+					onChange={handleChange}
+				/>
+				<TextField
+					id="filled-basic"
+					label="Email"
+					variant="filled"
+					required
+					name="email"
+					fullWidth
+					type={"email"}
+					value={contact.email}
+					onChange={handleChange}
+				/>
+				<TextField
+					id="filled-basic"
+					label="Photo URL"
+					variant="filled"
+					required
+					name="photo"
+					fullWidth
+					value={contact.photo}
+					onChange={handleChange}
+				/>
+			</CardContent>
+			<CardActions>
+				<Button size="small" type="submit">
+					Add New
+				</Button>
+			</CardActions>
+		</Card>
+	);
+};
 
 export default ContactForm;
